@@ -261,7 +261,7 @@ class IndexCMS {
 				$this->{$this->method}();
 			}
 			else {
-				echo json_encode(array('message' => 'Method ' . (string) $this->method . '() does not exist.'));
+				echo json_encode(array('status' => 'error', 'message' => 'Method ' . (string) $this->method . '() does not exist.'));
 			}
 
 			die();
@@ -291,7 +291,6 @@ class IndexCMS {
 	function __construct() {
 		$this->page = (empty($_GET['page'])) ? '' : $_GET['page'];
 		$this->uri = (empty($_SERVER['REQUEST_URI'])) ? false : str_replace('/?', '?', $_SERVER['REQUEST_URI']);
-		//$this->debug($this->page, 1);
 		
 		self::route();
 	}
