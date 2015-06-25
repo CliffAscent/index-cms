@@ -1,0 +1,14 @@
+
+# Ignore everything.
+**/*
+
+# Except the CMS files.
+!.gitignore
+!.htaccess
+!index.php
+!_plugin.php
+!header.php
+!footer.php
+!home.php
+!404.php
+!README.md
