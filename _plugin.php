@@ -4,7 +4,7 @@
 * Do not allow direct access.
 */
 if (!defined('BASEPATH') || !BASEPATH) {
-  die('Direct access not allowed.');
+	die('Direct access not allowed.');
 }
 
 
@@ -14,10 +14,10 @@ if (!defined('BASEPATH') || !BASEPATH) {
 class Plugin extends IndexCMS {
 
 	/**
-  * Home page override.
-  *
-  * @return void
-  */
+	* Home page override.
+	*
+	* @return void
+	*/
 	protected function home() {
 		$data['text'] = 'This is an override home() method from plugin.php.';
 
@@ -26,10 +26,10 @@ class Plugin extends IndexCMS {
 
 
 	/**
-  * 404 page override.
-  *
-  * @return void
-  */
+	* 404 page override.
+	*
+	* @return void
+	*/
 	protected function notFound($requested = false) {
 		$data['error'] = 'This is an override notFound() method from plugin.php.';
 
@@ -40,10 +40,10 @@ class Plugin extends IndexCMS {
 
 
 	/**
-  * Test page.
-  *
-  * @return void
-  */
+	* Test page.
+	*
+	* @return void
+	*/
 	protected function test() {
 		$data['test'] = 'This is a test method in plugin.php.';
 
@@ -52,10 +52,10 @@ class Plugin extends IndexCMS {
 
 
 	/**
-  * Launch the plugin.
-  *
-  * @return self
-  */
+	* Launch the plugin.
+	*
+	* @return self
+	*/
 	function __construct() {
 		parent::__construct();
 	}

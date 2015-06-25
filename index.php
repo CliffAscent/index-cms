@@ -23,13 +23,13 @@ class IndexCMS {
 
 
 	/**
-  * Debug data and optionally terminate the application.
-  *
-  * @param mixed $data The data you wish to be var_dump().
-  * @param bool $die Should the method die() at completion.
-  *
-  * @return void
-  */
+	* Debug data and optionally terminate the application.
+	*
+	* @param mixed $data The data you wish to be var_dump().
+	* @param bool $die Should the method die() at completion.
+	*
+	* @return void
+	*/
 	public function debug($data = false, $die = false) {
 		var_dump($data);
 
@@ -40,16 +40,16 @@ class IndexCMS {
 
 
 	/**
-  * Expose the data, display the page, and optionally terminate the application.
-  *
-  * @param mixed $page The page string or false.
-  * @param array $data The data that should be exposed to the template.
-  * @param bool $callMethod Should a matched method be called.
-  * @param mixed $directOutput A string to echo or false.
-  * @param bool $die Should the method die() at completion.
-  *
-  * @return void
-  */
+	* Expose the data, display the page, and optionally terminate the application.
+	*
+	* @param mixed $page The page string or false.
+	* @param array $data The data that should be exposed to the template.
+	* @param bool $callMethod Should a matched method be called.
+	* @param mixed $directOutput A string to echo or false.
+	* @param bool $die Should the method die() at completion.
+	*
+	* @return void
+	*/
 	protected function display($page = false, $data = false, $callMethod = true, $directOutput = false, $die = true) {
 
 		// Check for a back-up page.
@@ -124,12 +124,12 @@ class IndexCMS {
 
 
 	/**
-  * See what display options exist.
-  *
-  * @param mixed $page The page string or false.
-  *
-  * @return bool Does the page have a display option.
-  */
+	* See what display options exist.
+	*
+	* @param mixed $page The page string or false.
+	*
+	* @return bool Does the page have a display option.
+	*/
 	protected function displayOptions($page = false) {
 		// Reset the options
 		$this->hasOption = false;
@@ -167,10 +167,10 @@ class IndexCMS {
 
 
 	/**
-  * Home page.
-  *
-  * @return void
-  */
+	* Home page.
+	*
+	* @return void
+	*/
 	protected function home() {
 		$data['text'] = 'Index CMS is designed for rapid deployment of marked-up content or to serve as a basic website.';
 
@@ -179,10 +179,10 @@ class IndexCMS {
 
 
 	/**
-  * 404 page.
-  *
-  * @return void
-  */
+	* 404 page.
+	*
+	* @return void
+	*/
 	protected function notFound($requested = false) {
 		if ($requested) {
 			$data['error'] = 'The requested page "' . $requested . '" cannot be found.';
@@ -198,13 +198,13 @@ class IndexCMS {
 
 
 	/**
-  * Redirect to the provided URI.
-  *
-  * @param mixed $uri The URI to redirect to or false.
-  * @param mixed $protocol The protocol to use or false.
-  *
-  * @return void
-  */
+	* Redirect to the provided URI.
+	*
+	* @param mixed $uri The URI to redirect to or false.
+	* @param mixed $protocol The protocol to use or false.
+	*
+	* @return void
+	*/
 	protected function redirect($uri = false, $protocol = false) {
 		if (empty($uri)) {
 			$uri = $this->uri;
@@ -220,10 +220,10 @@ class IndexCMS {
 
 
 	/**
-  * Route the request to the proper method.
-  *
-  * @return void
-  */
+	* Route the request to the proper method.
+	*
+	* @return void
+	*/
 	private function route() {
 		// Show the home page if nothing was requested.
 		if (empty($this->sourceQuery)) {
@@ -269,10 +269,10 @@ class IndexCMS {
 
 
 	/**
-  * Launch the application.
-  *
-  * @return self
-  */
+	* Launch the application.
+	*
+	* @return self
+	*/
 	function __construct() {
 		$this->sourceQuery = (empty($_SERVER['QUERY_STRING'])) ? false : $_SERVER['QUERY_STRING'];
 		$this->uri = (empty($_SERVER['REQUEST_URI'])) ? false : str_replace('/?', '?', $_SERVER['REQUEST_URI']);
