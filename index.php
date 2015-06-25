@@ -17,9 +17,8 @@ class IndexCMS {
 	protected $hasPhp = false;
 	protected $method = false;
 	protected $page = '';
-
-	private $sourceQuery = false;
-	private $uri = false;
+	protected $post = false;
+	protected $uri = false;
 
 
 	/**
@@ -225,9 +224,18 @@ class IndexCMS {
 	* @return void
 	*/
 	private function route() {
+		if (!empty($_POST)) {
+			$this->post = $_POST;
+		}
+
 		// Show the home page if nothing was requested.
-		if (empty($this->sourceQuery)) {
+		if (empty($this->page) && empty($this->post)) {
 			$this->home();
+		}
+
+		// Remove any trailing / from the page.
+		if (substr($this->page, -1) == '/') {
+			$this->page = substr($this->page, 0, -1);
 		}
 
 		// Remove any trailing / from the URI.
@@ -235,21 +243,28 @@ class IndexCMS {
 			$this->uri = substr($this->uri, 0, -1);
 		}
 
-		// Get the proper page name.
-		if (substr($_SERVER['QUERY_STRING'], 0, 5) == 'page=') {
-			$this->sourceQuery = substr($_SERVER['QUERY_STRING'], 5);
+		// Route POST requests.
+		if (!empty($this->post)) {
+			if (empty($this->page)) {
+				$this->page = 'home';
+			}
 
-			if (strpos($this->sourceQuery, '&')) {
-				$this->page = substr($this->sourceQuery, 0, strpos($this->sourceQuery, '&'));
+			// Get the proper method name.
+			if (strpos($this->page, '/')) {
+				$this->method = str_replace('/', '_', $this->page);
+			} else {
+				$this->method = $this->page;
+			}
+
+			// Display the proper method or a JSON encoded error message.
+			if ($this->method && method_exists($this, $this->method)) {
+				$this->{$this->method}();
 			}
 			else {
-				$this->page = $this->sourceQuery;
+				echo json_encode(array('message' => 'Method ' . (string) $this->method . '() does not exist.'));
 			}
-		}
 
-		// Remove any trailing / from the page name.
-		if (substr($this->page, -1) == '/') {
-			$this->page = substr($this->page, 0, -1);
+			die();
 		}
 
 		// Call the proper method.
@@ -259,7 +274,7 @@ class IndexCMS {
 		elseif ($this->page == 'home') {
 			$this->redirect(str_replace('home', '', $this->uri));
 		}
-		elseif ($this->page == '404' || $this->page == 'notFound' || $this->page != 'header' || $this->page != 'footer') {
+		elseif ($this->page == '404' || $this->page == 'notFound' || $this->page == 'header' || $this->page == 'footer') {
 			$this->notFound($this->page);
 		}
 		elseif ($this->page != 'header' && $this->page != 'footer') {
@@ -274,8 +289,9 @@ class IndexCMS {
 	* @return self
 	*/
 	function __construct() {
-		$this->sourceQuery = (empty($_SERVER['QUERY_STRING'])) ? false : $_SERVER['QUERY_STRING'];
+		$this->page = (empty($_GET['page'])) ? '' : $_GET['page'];
 		$this->uri = (empty($_SERVER['REQUEST_URI'])) ? false : str_replace('/?', '?', $_SERVER['REQUEST_URI']);
+		//$this->debug($this->page, 1);
 		
 		self::route();
 	}
