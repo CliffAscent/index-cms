@@ -30,10 +30,11 @@ class Plugin extends IndexCMS {
 	*
 	* @return void
 	*/
-	protected function notFound($requested = false) {
+	protected function notFound($requested = false, $reason = false) {
 		$data['error'] = 'This is an override notFound() method from plugin.php.';
 
 		$data['requested'] = $requested;
+		$data['reason'] = $reason;
 
 		$this->display('404', $data, false, $data['error']);
 	}

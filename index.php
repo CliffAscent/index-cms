@@ -15,6 +15,7 @@ class IndexCMS {
 	protected $hasMethod = false;
 	protected $hasOption = false;
 	protected $hasPhp = false;
+	protected $blockedMethods = array('debug', 'display', 'displayOptions', 'footer', 'header', 'index', 'redirect', 'route');
 	protected $method = false;
 	protected $page = '';
 	protected $post = false;
@@ -182,7 +183,7 @@ class IndexCMS {
 	*
 	* @return void
 	*/
-	protected function notFound($requested = false) {
+	protected function notFound($requested = false, $reason = false) {
 		if ($requested) {
 			$data['error'] = 'The requested page "' . $requested . '" cannot be found.';
 		}
@@ -190,7 +191,12 @@ class IndexCMS {
 			$data['error'] = 'The requested page cannot be found.';
 		}
 
+		if ($reason) {
+			$data['error'] .= ' Reason: "' . $reason . '"';
+		}
+
 		$data['requested'] = $requested;
+		$data['reason'] = $reason;
 
 		$this->display('404', $data, false, $data['error']);
 	}
@@ -233,14 +239,9 @@ class IndexCMS {
 			$this->home();
 		}
 
-		// Remove any trailing / from the page.
-		if (substr($this->page, -1) == '/') {
-			$this->page = substr($this->page, 0, -1);
-		}
-
-		// Remove any trailing / from the URI.
-		if (substr($this->uri, -1) == '/') {
-			$this->uri = substr($this->uri, 0, -1);
+		// Show the 404 page for blocked requests.
+		if (in_array($this->page, $this->blockedMethods)) {
+			$this->notFound($this->page, 'reserved URI requested');
 		}
 
 		// Route POST requests.
@@ -274,10 +275,10 @@ class IndexCMS {
 		elseif ($this->page == 'home') {
 			$this->redirect(str_replace('home', '', $this->uri));
 		}
-		elseif ($this->page == '404' || $this->page == 'notFound' || $this->page == 'header' || $this->page == 'footer') {
+		elseif ($this->page == '404' || $this->page == 'notFound') {
 			$this->notFound($this->page);
 		}
-		elseif ($this->page != 'header' && $this->page != 'footer') {
+		else {
 			$this->display($this->page);
 		}
 	}
@@ -289,8 +290,8 @@ class IndexCMS {
 	* @return self
 	*/
 	function __construct() {
-		$this->page = (empty($_GET['page'])) ? '' : $_GET['page'];
-		$this->uri = (empty($_SERVER['REQUEST_URI'])) ? false : str_replace('/?', '?', $_SERVER['REQUEST_URI']);
+		$this->page = rtrim((empty($_GET['page'])) ? '' : $_GET['page'], '/');
+		$this->uri = rtrim((empty($_SERVER['REQUEST_URI'])) ? false : str_replace('/?', '?', $_SERVER['REQUEST_URI']), '/');
 		
 		self::route();
 	}
