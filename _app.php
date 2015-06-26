@@ -11,7 +11,7 @@ if (!defined('BASEPATH') || !BASEPATH) {
 /**
 * An application child class.
 */
-class Plugin extends IndexCMS {
+class App extends IndexCMS {
 
 	/**
 	* Home page override.
@@ -19,7 +19,7 @@ class Plugin extends IndexCMS {
 	* @return void
 	*/
 	protected function home() {
-		$data['text'] = 'This is an override home() method from plugin.php.';
+		$data['text'] = 'This is an override home() method from app.php.';
 
 		$this->display('home', $data, false, $data['text']);
 	}
@@ -31,7 +31,7 @@ class Plugin extends IndexCMS {
 	* @return void
 	*/
 	protected function notFound($requested = false, $reason = false) {
-		$data['error'] = 'This is an override notFound() method from plugin.php.';
+		$data['error'] = 'This is an override notFound() method from app.php.';
 
 		$data['requested'] = $requested;
 		$data['reason'] = $reason;
@@ -46,14 +46,14 @@ class Plugin extends IndexCMS {
 	* @return void
 	*/
 	protected function test() {
-		$data['test'] = 'This is a test method in plugin.php.';
+		$data['test'] = 'This is a test method in app.php.';
 
 		$this->display('test', $data, false, $data['test']);
 	}
 
 
 	/**
-	* Launch the plugin.
+	* Launch the app.
 	*
 	* @return self
 	*/
@@ -64,8 +64,8 @@ class Plugin extends IndexCMS {
 
 
 /**
-* Initialize the IndexCMS/Plugin object.
+* Initialize the IndexCMS/App object.
 */
-$IndexCMS = new Plugin();
+$IndexCMS = new App();
 
 ?>

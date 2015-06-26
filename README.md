@@ -43,9 +43,9 @@ The application is very small and well documented. It's recommended that you bro
 
 ## Modification
 
-The application is fork and modify friendly, but provides the systems necessary to be modified externally. The application will look for, and if found, include `plugin.php` and not initialize the `$IndexCMS` object directly. A sample `_plugin.php` file is provided, which includes home and 404 method overrides and a custom test method.
+The application is fork and modify friendly, but provides the systems necessary to be modified externally. The application will look for, and if found, include `app.php` and not initialize the `$IndexCMS` object directly. A sample `_app.php` file is provided, which includes home and 404 method overrides and a custom test method.
 
-It's recommended that you *do not edit* `index.php`, but instead copy and renamed `_plugin.php` to `plugin.php` and use it for all custom methods and modifications. This will allow you to update the main application and example plugin file without merge conflicts.
+It's recommended that you *do not edit* `index.php`, but instead copy and renamed `_app.php` to `app.php` and use it for all custom methods and modifications. This will allow you to update the main application and example `_app.php` file without merge conflicts.
 
 The `header.php`, `footer.php`, `home.php`, and `404.php` are provided for your convenience. You can safely modify or remove these files, because they won't be updated.
 

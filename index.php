@@ -15,7 +15,7 @@ class IndexCMS {
 	protected $hasMethod = false;
 	protected $hasOption = false;
 	protected $hasPhp = false;
-	protected $blockedMethods = array('debug', 'display', 'displayOptions', 'footer', 'header', 'index', 'redirect', 'route');
+	protected $blockedMethods = array('__construct', '_app', 'app', 'debug', 'display', 'displayOptions', 'footer', 'header', 'index', 'redirect', 'route');
 	protected $method = false;
 	protected $page = '';
 	protected $post = false;
@@ -210,7 +210,7 @@ class IndexCMS {
 	*
 	* @return void
 	*/
-	protected function redirect($uri = false, $protocol = false) {
+	public function redirect($uri = false, $protocol = false) {
 		if (empty($uri)) {
 			$uri = $this->uri;
 		}
@@ -229,7 +229,7 @@ class IndexCMS {
 	*
 	* @return void
 	*/
-	private function route() {
+	protected function route() {
 		if (!empty($_POST)) {
 			$this->post = $_POST;
 		}
@@ -299,10 +299,10 @@ class IndexCMS {
 
 
 /**
-* Load plugin.php or initialize the IndexCMS object.
+* Load app.php or initialize the IndexCMS object.
 */
-if (file_exists('plugin.php')) {
-	include 'plugin.php';
+if (file_exists('app.php')) {
+	include 'app.php';
 }
 else {
 	$IndexCMS = new IndexCMS();

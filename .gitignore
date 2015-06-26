@@ -6,7 +6,7 @@
 !.gitignore
 !.htaccess
 !index.php
-!_plugin.php
+!_app.php
 !header.php
 !footer.php
 !home.php
