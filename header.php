@@ -1,5 +1,3 @@
-<?php if (!defined('BASEPATH')) { die('Direct access not allowed.'); } ?>
-
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 	<head>

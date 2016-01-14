@@ -74,6 +74,11 @@ class IndexCMS {
 		// Get the proper method name.
 		if (!empty($page)) {
 			if (strpos($page, '/')) {
+				// Deny access to blocked directories.
+				if (in_array(substr($this->page, 0, strrpos($this->page, '/') + 1), $this->blockedMethods)) {
+					$this->notFound($this->page, 'reserved URI requested');
+				}
+
 				$this->method = str_replace('/', '_', $page);
 			} else {
 				$this->method = $page;

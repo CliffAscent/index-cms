@@ -1,5 +1,3 @@
-<?php if (!defined('BASEPATH')) { die('Direct access not allowed.'); } ?>
-
 <?php include 'header.php' ?>
 
 <h1>Page Not Found</h1>
