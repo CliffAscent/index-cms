@@ -32,7 +32,7 @@ The CMS also provides several means of exposing data to the templates, such as a
 Post requests will be routed to the proper method to accommodate for Ajax requests, etc. If the requested method is not located `json_encode(array('status' => 'error', 'message' => 'the message'))` will be returned and the application terminated.
 
 ### Blocked Requests
-Requests to `header` or `footer` will be ignored so they can be used as partial template file includes. Requests to any of the core methods, such as `route()` or `display()`, will be sent to the `notFound()` method.
+Certain routes will be ignored to prevent direct file access or access to reserved methods. Requests to any of the core methods, such as `route()` or `display()`, or default partial files, such as `header.php` or `footer.php`, will be sent to the `notFound()` method. You can extend the blocked methods by adding the routes in your `app.php` `__construct()` method before the `parent::__construct()`. Example: `$this->blockedMethods[] = 'private';` Entire directories can be blocked by adding a / to the end of the route.
 
 ### Directories
 If a directory path is provided, such as `dom.com/dir/test/`, the router will look in the `dir` directory for the file `test` and also look for the `dir_test()` method.

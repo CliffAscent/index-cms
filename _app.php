@@ -58,6 +58,10 @@ class App extends IndexCMS {
 	* @return self
 	*/
 	function __construct() {
+		// Block routes here to prevent direct file access.
+		// Entire directories can be blocked by adding a / to the end.
+		// $this->blockedMethods[] = 'private';
+
 		parent::__construct();
 	}
 }
